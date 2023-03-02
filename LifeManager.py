@@ -1,5 +1,5 @@
-from AdvancedGameOfLife.Life.Life import Life
-from AdvancedGameOfLife.Pos import Pos
+from Life.Life import Life
+from Pos import Pos
 
 def calc(cols:int, col:int, row:int):
     if col >= cols:
@@ -20,6 +20,7 @@ class LifeManager():
         self._life = []
         # _newLife is used to temporarily store anything that has been spawned before the current loop has finished
         self._newLife = []
+        self._lifeToRemove = []
         self._grid = [None for _ in range(cols * rows)]
         self._empty_cells = [calc(self._cols, col, row) for row in range(self._rows) for col in range(self._cols)]
         
@@ -49,16 +50,32 @@ class LifeManager():
     def remove_life(self, life:Life):
         num = self.calc(life.col, life.row)
         if self._grid[num] != None:
-            self._life.remove(life)
-            self._grid[num] = None
-            self._empty_cells.append(num)
+            self._lifeToRemove.append(life)
+            #self._grid[num] = None
+            #self._empty_cells.append(num)
 
     def add_life(self, life:Life):
         num = self.calc(life.col, life.row)
         if self._grid[num] == None:
+            self._newLife.append(life)
+            #self._grid[num] = life
+            #self._empty_cells.remove(num)
+            print(life)
+
+    def update_lists(self):
+        for life in self._lifeToRemove:
+            num = self.calc(life.col, life.row)
+            self._life.remove(life)
+            self._grid[num] = None
+            self._empty_cells.append(num)
+        
+        for life in self._newLife:
+            num = self.calc(life.col, life.row)
             self._life.append(life)
             self._grid[num] = life
             self._empty_cells.remove(num)
-            print(life)
+
+        self._lifeToRemove.clear()
+        self._newLife.clear()
 
     

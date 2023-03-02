@@ -1,16 +1,16 @@
-from AdvancedGameOfLife.DisplayManager import DisplayManager
-from AdvancedGameOfLife.LifeManager import LifeManager
+from DisplayManager import DisplayManager
+from LifeManager import LifeManager
 import pygame
 import random
-from AdvancedGameOfLife.Life.Mushroom import Mushroom
-from AdvancedGameOfLife.Pos import Pos
-from AdvancedGameOfLife.LifeManager import calc
+from Life.Mushroom import Mushroom
+from Pos import Pos
+from LifeManager import calc
 
 FPS = 60
 
 CELL_SIZE = 30
-COLS = 10
-ROWS = 10
+COLS = 4
+ROWS = 4
 
 _display = DisplayManager(CELL_SIZE, COLS, ROWS)
 _life = LifeManager(COLS, ROWS)
@@ -71,7 +71,7 @@ def next_epoch():
 
             if life.name == 'Mushroom':
                 #if all neighbours are empty add a single mushroom in a random direction
-                if EmptyNeigh == 8:
+                if EmptyNeigh >= 1:
                     relative_target = None
                     while relative_target == None or relative_target == 4:
                         relative_target = random.randint(0,8)
@@ -90,15 +90,13 @@ def next_epoch():
                     #print(f'Relative_Target: {relative_target}')
                     #print(f'spawn_Col: {col}')
                     #print(f'spawn_Row: {row}')
-
+                    #if _life.is_empty(calc(COLS,col,row)):
                     spawn_life(Mushroom(Pos(col,row)))
-                elif MushroomNeigh >= 1:
+                elif MushroomNeigh >= 3:
                     remove_life(life)
 
 
-                    
-                    
-                    
+    _life.update_lists()
     update_display()
 
 
@@ -118,6 +116,8 @@ if __name__ == '__main__':
                 running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 next_epoch()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
+                print(_life.life)
 
             
 

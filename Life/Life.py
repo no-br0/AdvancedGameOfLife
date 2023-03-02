@@ -1,4 +1,4 @@
-from AdvancedGameOfLife.Pos import Pos
+from Pos import Pos
 import pygame
 
 class Life():

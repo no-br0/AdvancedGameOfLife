@@ -1,5 +1,5 @@
 import pygame
-from AdvancedGameOfLife.LifeManager import calc
+from LifeManager import calc
 
 dead_color = (0,0,0,255)
 

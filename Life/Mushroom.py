@@ -1,5 +1,5 @@
-from AdvancedGameOfLife.Life.Life import Life
-from AdvancedGameOfLife.Pos import Pos
+from Life.Life import Life
+from Pos import Pos
 
 class Mushroom(Life):
     def __init__(self, pos:Pos):
