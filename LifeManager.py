@@ -11,9 +11,9 @@ def calc(cols:int, col:int, row:int):
         row -= cols
     elif row < 0:
         row += cols
-    print(f'Calc_col: {col}')
-    print(f'Calc_row: {row}')
-    print(f'Calc: {(row * cols) + col}')
+    #print(f'Calc_col: {col}')
+    #print(f'Calc_row: {row}')
+    #print(f'Calc: {(row * cols) + col}')
     return (row * cols) + col
 
 class LifeManager():

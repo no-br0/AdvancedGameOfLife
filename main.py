@@ -6,11 +6,11 @@ from Life.Mushroom import Mushroom
 from Pos import Pos
 from LifeManager import calc
 
-FPS = 10
+FPS = 2
 
-CELL_SIZE = 30
-COLS = 10
-ROWS = 10
+CELL_SIZE = 10
+COLS = 50
+ROWS = 50
 
 _display = DisplayManager(CELL_SIZE, COLS, ROWS)
 _life = LifeManager(COLS, ROWS)
@@ -73,17 +73,16 @@ def next_epoch():
 
             if life.name == 'Mushroom':
                 #if all neighbours are empty add a single mushroom in a random direction
-                if EmptyNeigh >= 2:
-                    #relative_target = None
-                    target_pos:Pos = None
+                if EmptyNeigh >= 5:
+                    relative_target = None
                     target_achieved = False
                     while target_achieved == False:
-                        #while relative_target == None or relative_target == 4:
-                        #    relative_target = random.randint(0,8)
-                        if len(availCells) > 0:
-                            target_pos = availCells[random.randint(0, len(availCells)-1)]
-                        #col = (relative_target//3) - 1
-                        #row = ((relative_target - col) // 3) - 1
+                        while relative_target == None or relative_target == 4:
+                            relative_target = random.randint(0,8)
+                        #if len(availCells) > 0:
+                        #    target_pos = availCells[random.randint(0, len(availCells)-1)]
+                        col = (relative_target%3) - 1
+                        row = (relative_target//3) - 1
                     
                         #print(f'Current_col: {life.col}')
                         #print(f'Current_row: {life.row}')
@@ -91,25 +90,21 @@ def next_epoch():
                         #print(f'relative_Col: {col}')
                         #print(f'relative_Row: {row}')
 
-                        #col += life.col
-                        #row += life.row
-                        if target_pos != None:
-                            col = target_pos.col
-                            row = target_pos.row
-
-                            if _life.is_empty(calc(COLS,col,row)):
-                                spawn_life(Mushroom(target_pos))
-                                target_achieved = True
-                            else:
-                                relative_target = None
-                        else:
+                        col += life.col
+                        row += life.row
+                        if _life.is_empty(calc(COLS,col,row)):
+                            spawn_life(Mushroom(Pos(col, row)))
                             target_achieved = True
+                        else:
+                            relative_target = None
+
                     #print(f'Relative_Target: {relative_target}')
                     #print(f'spawn_Col: {col}')
                     #print(f'spawn_Row: {row}')
                     #if _life.is_empty(calc(COLS,col,row)):
-                #elif MushroomNeigh >= 3:
-                    #remove_life(life)
+                
+                if MushroomNeigh >= 4:
+                    remove_life(life)
 
 
     _life.update_lists()
@@ -125,17 +120,22 @@ if __name__ == '__main__':
     pygame.init()
     running = True
     clock = pygame.time.Clock()
-
+    simulating = False
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                next_epoch()
+                if simulating:
+                    simulating = False
+                else:
+                    simulating = True
             if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
                 print(_life.life)
 
-            
+
+        if simulating:
+            next_epoch()
 
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(FPS)
