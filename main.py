@@ -27,13 +27,13 @@ def spawn_life(life):
     global _life
     if _life.is_empty(calc(COLS, life.col, life.row)):
         _life.add_life(life)
-        print("life spawned.")
+        #print("life spawned.")
 
 def remove_life(life):
     global _life
     if _life.is_empty(calc(COLS, life.col, life.row)) == False:
         _life.remove_life(life)
-        print('life Removed')
+        #print('life Removed')
 
 
 def next_epoch():
@@ -73,7 +73,7 @@ def next_epoch():
 
             if life.name == 'Mushroom':
                 #if all neighbours are empty add a single mushroom in a random direction
-                if EmptyNeigh >= 5:
+                if EmptyNeigh >= 7:
                     relative_target = None
                     target_achieved = False
                     while target_achieved == False:
@@ -103,7 +103,7 @@ def next_epoch():
                     #print(f'spawn_Row: {row}')
                     #if _life.is_empty(calc(COLS,col,row)):
                 
-                if MushroomNeigh >= 4:
+                if MushroomNeigh >= 1:
                     remove_life(life)
 
 

@@ -67,7 +67,7 @@ class LifeManager():
             #self._life.append(life)
             #self._grid[num] = life
             #self._empty_cells.remove(num)
-            print(life)
+            #print(life)
 
     def update_lists(self):
         for life in self._lifeToRemove:
