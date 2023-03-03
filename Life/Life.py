@@ -28,5 +28,5 @@ class Life():
         return self._pos.row
 
     def __str__(self):
-        return f"[Name:{self._name}, Pos:{self._pos}"
+        return f"[Name:{self._name}, Pos:{self._pos}]"
 

@@ -11,6 +11,9 @@ def calc(cols:int, col:int, row:int):
         row -= cols
     elif row < 0:
         row += cols
+    print(f'Calc_col: {col}')
+    print(f'Calc_row: {row}')
+    print(f'Calc: {(row * cols) + col}')
     return (row * cols) + col
 
 class LifeManager():
@@ -50,14 +53,18 @@ class LifeManager():
     def remove_life(self, life:Life):
         num = self.calc(life.col, life.row)
         if self._grid[num] != None:
-            self._lifeToRemove.append(life)
+            if self._lifeToRemove.__contains__(life) == False:
+                self._lifeToRemove.append(life)
+            #self._life.remove(life)
             #self._grid[num] = None
             #self._empty_cells.append(num)
 
     def add_life(self, life:Life):
         num = self.calc(life.col, life.row)
         if self._grid[num] == None:
-            self._newLife.append(life)
+            if self._newLife.__contains__(life) == False:
+                self._newLife.append(life)
+            #self._life.append(life)
             #self._grid[num] = life
             #self._empty_cells.remove(num)
             print(life)
@@ -65,15 +72,17 @@ class LifeManager():
     def update_lists(self):
         for life in self._lifeToRemove:
             num = self.calc(life.col, life.row)
-            self._life.remove(life)
-            self._grid[num] = None
-            self._empty_cells.append(num)
+            if self.is_empty(num) == False:
+                self._life.remove(life)
+                self._grid[num] = None
+                self._empty_cells.append(num)
         
         for life in self._newLife:
             num = self.calc(life.col, life.row)
-            self._life.append(life)
-            self._grid[num] = life
-            self._empty_cells.remove(num)
+            if self.is_empty(num):
+                self._life.append(life)
+                self._grid[num] = life
+                self._empty_cells.remove(num)
 
         self._lifeToRemove.clear()
         self._newLife.clear()
