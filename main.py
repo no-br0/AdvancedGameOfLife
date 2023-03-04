@@ -4,14 +4,7 @@ import pygame
 import random
 from Life.Mushroom import Mushroom
 from Pos import Pos
-#from LifeManager import calc
 from Utils import *
-
-#FPS = 10
-
-#CELL_SIZE = 4
-#COLS = 100
-#ROWS = 100
 
 _display = DisplayManager(CELL_SIZE, COLS, ROWS)
 _life = LifeManager(COLS, ROWS)
@@ -74,7 +67,7 @@ def next_epoch():
 
             if life.name == 'Mushroom':
                 #if all neighbours are empty add a single mushroom in a random direction
-                if EmptyNeigh >= 5:
+                if EmptyNeigh >= 6:
                     relative_target = None
                     target_achieved = False
                     while target_achieved == False:
@@ -104,7 +97,10 @@ def next_epoch():
 
 
 
-
+def Reset():
+    _life.Reset()
+    _display.reset_grid()
+    
 
 
 
@@ -123,7 +119,9 @@ if __name__ == '__main__':
                 else:
                     simulating = True
             if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
-                print(_life.life)
+                Reset()
+
+            
 
 
         if simulating:
