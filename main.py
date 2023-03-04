@@ -95,7 +95,7 @@ def next_epoch():
                         else:
                             relative_target = None
                 
-                if MushroomNeigh >= 8:
+                if MushroomNeigh >= 2:
                     remove_life(life)
 
 
