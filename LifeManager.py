@@ -2,19 +2,30 @@ from Life.Life import Life
 from Pos import Pos
 
 def calc(cols:int, col:int, row:int):
-    if col >= cols:
-        col -= cols
-    elif col < 0:
-        col += cols
+    #print(f'Calc_Col_Before: {col}')
 
-    if row >= cols:
-        row -= cols
-    elif row < 0:
-        row += cols
+    #if col >= cols:
+    #    col -= cols
+    #elif col < 0:
+    #    col += cols
+    col = (col%(cols))
+    #print(f'Calc_Col_After: {col}')
+
+
+    #print(f'Calc_Row_Before: {row}')
+    #if row >= cols:
+    #    row -= cols
+    #elif row < 0:
+    #    row += cols
+    row = (row%(cols))
+    #print(f'Calc_Row_AfterL: {row}')
+    
     #print(f'Calc_col: {col}')
     #print(f'Calc_row: {row}')
     #print(f'Calc: {(row * cols) + col}')
-    return (row * cols) + col
+    value = (row * cols) + col
+    #print(f"Calc_Value: {value}")
+    return value
 
 class LifeManager():
     def __init__(self, cols:int, rows:int):

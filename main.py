@@ -73,7 +73,7 @@ def next_epoch():
 
             if life.name == 'Mushroom':
                 #if all neighbours are empty add a single mushroom in a random direction
-                if EmptyNeigh >= 7:
+                if EmptyNeigh >= 6:
                     relative_target = None
                     target_achieved = False
                     while target_achieved == False:
@@ -82,13 +82,9 @@ def next_epoch():
                         #if len(availCells) > 0:
                         #    target_pos = availCells[random.randint(0, len(availCells)-1)]
                         col = (relative_target%3) - 1
-                        row = (relative_target//3) - 1
-                    
-                        #print(f'Current_col: {life.col}')
-                        #print(f'Current_row: {life.row}')
 
-                        #print(f'relative_Col: {col}')
-                        #print(f'relative_Row: {row}')
+                        row = (relative_target//3) - 1
+
 
                         col += life.col
                         row += life.row
@@ -97,11 +93,6 @@ def next_epoch():
                             target_achieved = True
                         else:
                             relative_target = None
-
-                    #print(f'Relative_Target: {relative_target}')
-                    #print(f'spawn_Col: {col}')
-                    #print(f'spawn_Row: {row}')
-                    #if _life.is_empty(calc(COLS,col,row)):
                 
                 if MushroomNeigh >= 1:
                     remove_life(life)
