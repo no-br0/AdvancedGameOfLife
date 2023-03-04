@@ -4,13 +4,14 @@ import pygame
 import random
 from Life.Mushroom import Mushroom
 from Pos import Pos
-from LifeManager import calc
+#from LifeManager import calc
+from Utils import *
 
-FPS = 2
+#FPS = 10
 
-CELL_SIZE = 10
-COLS = 50
-ROWS = 50
+#CELL_SIZE = 4
+#COLS = 100
+#ROWS = 100
 
 _display = DisplayManager(CELL_SIZE, COLS, ROWS)
 _life = LifeManager(COLS, ROWS)
@@ -25,13 +26,13 @@ def update_display():
 
 def spawn_life(life):
     global _life
-    if _life.is_empty(calc(COLS, life.col, life.row)):
+    if _life.is_empty(calc(life.col, life.row)):
         _life.add_life(life)
         #print("life spawned.")
 
 def remove_life(life):
     global _life
-    if _life.is_empty(calc(COLS, life.col, life.row)) == False:
+    if _life.is_empty(calc(life.col, life.row)) == False:
         _life.remove_life(life)
         #print('life Removed')
 
@@ -59,7 +60,7 @@ def next_epoch():
                         #do nothing
                         EmptyNeigh += 0
                     else:
-                        num = calc(COLS, col, row)
+                        num = calc(col, row)
                         if _life.is_empty(num):
                             EmptyNeigh += 1
                             availCells.append(Pos(col,row))
@@ -73,7 +74,7 @@ def next_epoch():
 
             if life.name == 'Mushroom':
                 #if all neighbours are empty add a single mushroom in a random direction
-                if EmptyNeigh >= 6:
+                if EmptyNeigh >= 5:
                     relative_target = None
                     target_achieved = False
                     while target_achieved == False:
@@ -88,13 +89,13 @@ def next_epoch():
 
                         col += life.col
                         row += life.row
-                        if _life.is_empty(calc(COLS,col,row)):
+                        if _life.is_empty(calc(col,row)):
                             spawn_life(Mushroom(Pos(col, row)))
                             target_achieved = True
                         else:
                             relative_target = None
                 
-                if MushroomNeigh >= 1:
+                if MushroomNeigh >= 8:
                     remove_life(life)
 
 

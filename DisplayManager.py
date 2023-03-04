@@ -1,5 +1,6 @@
 import pygame
-from LifeManager import calc
+#from LifeManager import calc
+from Utils import calc
 
 dead_color = (0,0,0,255)
 
@@ -38,11 +39,11 @@ class DisplayManager():
         self._grid.clear()
 
     def set_color(self, col, row, color):
-        num = calc(self._cols, col, row)
+        num = calc(col, row)
         pygame.draw.rect(self._screen, color, self._grid[num])
 
     def get_color(self, col, row):
-        num = calc(self._cols, col, row)
+        num = calc(col, row)
         return self._screen.get_at((self._grid[num][0], self._grid[num][1]))
 
 if __name__ == '__main__':
