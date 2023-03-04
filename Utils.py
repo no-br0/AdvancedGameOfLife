@@ -1,5 +1,6 @@
-FPS = 5
-CELL_SIZE = 4
+
+FPS = 4
+CELL_SIZE = 6
 COLS = 200
 ROWS = 200
 

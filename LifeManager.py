@@ -27,8 +27,9 @@ class LifeManager():
 
     def Reset(self):
         self._newLife.clear()
-        for life in self._life:
-            self.remove_life(life)
+        for _ in range(len(self._life)):
+            self.remove_life(self._life[0])
+
     
     def is_empty(self, num):
         if self._grid[num] == None:
