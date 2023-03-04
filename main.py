@@ -67,7 +67,7 @@ def next_epoch():
 
             if life.name == 'Mushroom':
                 #if all neighbours are empty add a single mushroom in a random direction
-                if EmptyNeigh >= 6:
+                if EmptyNeigh >= 5:
                     relative_target = None
                     target_achieved = False
                     while target_achieved == False:
@@ -99,7 +99,6 @@ def next_epoch():
 
 def Reset():
     _life.Reset()
-    _display.reset_grid()
     
 
 
@@ -119,7 +118,9 @@ if __name__ == '__main__':
                 else:
                     simulating = True
             if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
+                simulating = False
                 Reset()
+                simulating = True
 
             
 
