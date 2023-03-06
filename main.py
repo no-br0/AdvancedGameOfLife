@@ -43,6 +43,7 @@ def next_epoch():
     else:
         for life in _life.life:
 
+            relative_target = None
             availCells = []
             EmptyNeigh = 0
             MushroomNeigh = 0
@@ -70,7 +71,6 @@ def next_epoch():
                                     RabbitNeigh += 1
 
                 if EmptyNeigh >= 1:
-                    relative_target = None
                     target_achieved = False
                     while target_achieved == False:
                         #while relative_target == None or relative_target == 4:
@@ -82,7 +82,9 @@ def next_epoch():
                             spawn_life(Mushroom(relative_target))
                             target_achieved = True
                         else:
-                            relative_target = None
+                            remove_life(_life.grid[calc(relative_target.col, relative_target.row)])
+                            spawn_life(Mushroom(relative_target))
+                            target_achieved = True
                 
                 if MushroomNeigh >= 2:
                     remove_life(life)
@@ -117,20 +119,18 @@ def next_epoch():
                                     GrassNeigh += 1
 
                 if EmptyNeigh >= 6:
-                    relative_target = None
-                    target_achieved = False
+                    remove_life(life)
 
-                if MushroomNeigh >= 3:
+                if MushroomNeigh == 3:
                     if len(availCells) > 0:
                         relative_target = availCells[random.randint(0, len(availCells)-1)]
+                        remove_life(_life.grid[calc(relative_target.col, relative_target.row)])
+                        spawn_life(Grass(relative_target))
 
-                    remove_life(_life.grid[calc(relative_target.col, relative_target.row)])
-                    spawn_life(Grass(relative_target))
 
-
-                if GrassNeigh >= 2:
+                if GrassNeigh <= 2 and MushroomNeigh == 0:
                     remove_life(life)
-                elif MushroomNeigh > 4:
+                elif MushroomNeigh > 2:
                     remove_life(life)
 
             # END GRASS
