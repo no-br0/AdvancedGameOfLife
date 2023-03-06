@@ -7,9 +7,9 @@ from Pos import Pos
 from calc import calc
 from Utils import _life, _display
 from Variables import FPS
+import threading
 
-
-
+num_threads = 2
 
 def display_life():
     for life in _life.life:
@@ -136,12 +136,23 @@ def next_epoch():
             # END GRASS
                     
 
-
+    print("next_epoch: Finished")
     _life.update_lists()
     update_display()
 
 
+class NextEpochThread(threading.Thread):
+    def __init__(self):
+        super().__init__()
+        self.running = False
+        self.started = False
 
+    def run(self):
+        self.running = True
+        next_epoch()
+        pygame.display.update()
+        print('Display: Updated')
+        self.running = False
 
 
 def Reset():
@@ -156,6 +167,7 @@ pygame.init()
 running = True
 clock = pygame.time.Clock()
 simulating = False
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -168,11 +180,11 @@ while running:
         if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
             Reset()
 
-            
+    
+    next_epoch_thread = NextEpochThread()
+    if not next_epoch_thread.running and simulating:
+        next_epoch_thread.start()
 
 
-    if simulating:
-        next_epoch()
-
-    pygame.display.update()
+    #pygame.display.update()
     clock.tick(FPS)
