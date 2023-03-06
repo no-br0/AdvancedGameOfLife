@@ -151,28 +151,28 @@ def Reset():
 
 
 
-if __name__ == '__main__':
-    pygame.init()
-    running = True
-    clock = pygame.time.Clock()
-    simulating = False
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                if simulating:
-                    simulating = False
-                else:
-                    simulating = True
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
-                Reset()
+
+pygame.init()
+running = True
+clock = pygame.time.Clock()
+simulating = False
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            if simulating:
+                simulating = False
+            else:
+                simulating = True
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
+            Reset()
 
             
 
 
-        if simulating:
-            next_epoch()
+    if simulating:
+        next_epoch()
 
-        pygame.display.update()
-        clock.tick(FPS)
+    pygame.display.update()
+    clock.tick(FPS)
