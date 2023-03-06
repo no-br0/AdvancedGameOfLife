@@ -1,4 +1,4 @@
 COLS = 50
 ROWS = 50
-FPS = 1
+FPS = 4
 CELL_SIZE = 10

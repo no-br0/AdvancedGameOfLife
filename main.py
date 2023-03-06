@@ -10,7 +10,7 @@ from LogicActions import *
 from Logic.MushroomLogic import MushroomLogic
 from Logic.GrassLogic import GrassLogic
 
-num_threads = 2
+num_threads = 4
 
 
 def next_epoch():
@@ -84,6 +84,8 @@ while running:
     if not next_epoch_thread.running and simulating:
         next_epoch_thread.start()
 
+    #if simulating:
+    #    print(f"Number of active threads: {threading.active_count()}")
 
     #pygame.display.update()
     clock.tick(FPS)
