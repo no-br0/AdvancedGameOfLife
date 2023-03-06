@@ -1,15 +1,15 @@
-from DisplayManager import DisplayManager
-from LifeManager import LifeManager
 import pygame
 import random
 from Life.Mushroom import Mushroom
 from Life.Grass import Grass
 from Life.Rabbit import Rabbit
 from Pos import Pos
-from Utils import *
+from calc import calc
+from Utils import _life, _display
+from Variables import FPS
 
-_display = DisplayManager(CELL_SIZE, COLS, ROWS)
-_life = LifeManager(COLS, ROWS)
+
+
 
 def display_life():
     for life in _life.life:
@@ -49,8 +49,7 @@ def next_epoch():
             GrassNeigh = 0
             RabbitNeigh = 0
 
-
-            
+            # START MUSHROOM
 
             if life.name == 'Mushroom':
                 for row in range(life.row-1, life.row+2):
@@ -67,6 +66,8 @@ def next_epoch():
                                     MushroomNeigh += 1
                                 elif _life.grid[num].name == 'Grass':
                                     GrassNeigh += 1
+                                elif _life.grid[num].name == 'Rabbit':
+                                    RabbitNeigh += 1
 
                 if EmptyNeigh >= 1:
                     relative_target = None
@@ -83,7 +84,7 @@ def next_epoch():
                         else:
                             relative_target = None
                 
-                if MushroomNeigh >= 1:
+                if MushroomNeigh >= 2:
                     remove_life(life)
                 
                 if MushroomNeigh >= 5:
@@ -95,23 +96,44 @@ def next_epoch():
                 #    spawn_life(Rabbit(Pos(life.col,life.row)))
             
 
+            # END MUSHROOM
+            # START GRASS
+
             elif life.name == 'Grass':
-                if EmptyNeigh >= 5:
+                for row in range(life.row-1, life.row+2):
+                    for col in range(life.col-1, life.col+2):
+                        if row == life.row and col == life.col:
+                            EmptyNeigh += 0
+                        else:
+                            num = calc(col, row)
+                            if _life.is_empty(num):
+                                EmptyNeigh += 1
+                            else:
+                                if _life.grid[num].name == 'Mushroom':
+                                    MushroomNeigh += 1
+                                    availCells.append(Pos(col,row))
+
+                                elif _life.grid[num].name == 'Grass':
+                                    GrassNeigh += 1
+
+                if EmptyNeigh >= 6:
                     relative_target = None
                     target_achieved = False
-                    while target_achieved == False:
-                        
 
-                        if _life.is_empty(calc(col,row)):
-                            spawn_life(Grass(relative_target))
-                            target_achieved = True
-                        else:
-                            relative_target = None
+                if MushroomNeigh >= 3:
+                    if len(availCells) > 0:
+                        relative_target = availCells[random.randint(0, len(availCells)-1)]
 
-                if GrassNeigh >= 4:
+                    remove_life(_life.grid[calc(relative_target.col, relative_target.row)])
+                    spawn_life(Grass(relative_target))
+
+
+                if GrassNeigh >= 2:
+                    remove_life(life)
+                elif MushroomNeigh > 4:
                     remove_life(life)
 
-
+            # END GRASS
                     
 
 

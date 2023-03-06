@@ -1,6 +1,6 @@
 from Life.Life import Life
 from Pos import Pos
-from Utils import calc
+from calc import calc
 
 
 class LifeManager():

@@ -1,0 +1,4 @@
+COLS = 200
+ROWS = 200
+FPS = 4
+CELL_SIZE = 6

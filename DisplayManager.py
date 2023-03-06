@@ -1,6 +1,6 @@
 import pygame
 #from LifeManager import calc
-from Utils import calc
+from calc import calc
 
 dead_color = (0,0,0,255)
 
