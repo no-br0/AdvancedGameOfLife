@@ -1,7 +1,7 @@
 from calc import calc
 from Pos import Pos
 import random
-from LogicActions import *
+from LogicActions import remove_life, spawn_life
 from Life.Mushroom import Mushroom
 from Life.Grass import Grass
 from Life.Rabbit import Rabbit
@@ -19,12 +19,13 @@ def MushroomLogic(life, neigh_count, availCells):
                         neigh_count.EmptyNeigh += 1
                         availCells.append(Pos(col,row))
                     else:
-                        if _life.grid[num].name == 'Mushroom':
-                            neigh_count.MushroomNeigh += 1
-                        elif _life.grid[num].name == 'Grass':
-                            neigh_count.GrassNeigh += 1
-                        elif _life.grid[num].name == 'Rabbit':
-                            neigh_count.RabbitNeigh += 1
+                        if _life.grid[num] != None:
+                            if _life.grid[num].name == 'Mushroom':
+                                neigh_count.MushroomNeigh += 1
+                            elif _life.grid[num].name == 'Grass':
+                                neigh_count.GrassNeigh += 1
+                            elif _life.grid[num].name == 'Rabbit':
+                                neigh_count.RabbitNeigh += 1
 
         if neigh_count.EmptyNeigh >= 1:
             target_achieved = False

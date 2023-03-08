@@ -10,7 +10,6 @@ from LogicActions import *
 from Logic.MushroomLogic import MushroomLogic
 from Logic.GrassLogic import GrassLogic
 
-num_threads = 4
 
 
 def next_epoch():
