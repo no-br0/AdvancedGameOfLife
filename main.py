@@ -2,7 +2,7 @@ import pygame
 import random
 from Life.Mushroom import Mushroom
 from Pos import Pos
-from Utils import _life, _display
+import Utils
 from Variables import FPS
 import threading
 from NeighCount import NeighCount
@@ -13,30 +13,27 @@ from Logic.GrassLogic import GrassLogic
 
 
 def next_epoch():
-    global _display
-    global _life
 
-    if len(_life.life) == 0:
-        col = random.randint(0, _life._cols-1)
-        row = random.randint(0, _life._rows-1)
+    if len(Utils._life.life) == 0:
+        col = random.randint(0, Utils._life._cols-1)
+        row = random.randint(0, Utils._life._rows-1)
         spawn_life(Mushroom(Pos(col,row)))
     else:
-        for life in _life.life:
+        for life in Utils._life.life:
 
             relative_target = None
             availCells = []
             neigh_count = NeighCount()
-            if MushroomLogic(life, neigh_count, availCells):
-                continue
-            elif GrassLogic(life, neigh_count, availCells):
-                continue
+            if life.name == 'Mushroom':
+                MushroomLogic(life, neigh_count, availCells)
+            elif life.name == 'Grass':
+                GrassLogic(life, neigh_count, availCells)
             
-            # END GRASS
                     
 
     #print("next_epoch: Finished")
-    _life.update_lists()
-    update_display()
+    Utils._life.update_lists()
+    #update_display()
 
 
 class NextEpochThread(threading.Thread):
@@ -54,8 +51,8 @@ class NextEpochThread(threading.Thread):
 
 
 def Reset():
-    _life.Reset()
-    _display.reset_grid()
+    Utils._life.Reset()
+    Utils._display.reset_grid()
     
 
 

@@ -38,6 +38,10 @@ class DisplayManager():
     def clear_grid(self):
         self._grid.clear()
 
+    def clear_cell(self, col, row):
+        num = calc(col,row)
+        pygame.draw.rect(self._screen, dead_color, self._grid[num])
+
     def set_color(self, col, row, color):
         num = calc(col, row)
         pygame.draw.rect(self._screen, color, self._grid[num])
