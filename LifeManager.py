@@ -9,13 +9,10 @@ class LifeManager():
         self._rows:int = rows
         self._life = []
         self._newLife = []
-        self._grid = [None for _ in range(cols * rows)]
+        self._lifeToRemove = []
         self._empty_cells = [calc(col, row) for row in range(self._rows) for col in range(self._cols)]
-        
-
-    @property
-    def grid(self):
-        return self._grid
+        self._empty_cells_ToAdd = []
+        self._empty_cells_ToRemove = []
 
     @property
     def life(self):
@@ -32,33 +29,33 @@ class LifeManager():
 
     
     def is_empty(self, num):
-        if self._grid[num] == None:
-            return True
-        else:
+        if self._empty_cells.__contains__(num):
             return False
+        else:
+            return True
 
     def remove_life(self, life:Life):
+        print('life removed')
         num = calc(life.col, life.row)
-        if self._grid[num] != None and self._life.__contains__(life):
-            self._life.remove(life)
-            self._grid[num] = None
-            self._empty_cells.append(num)
+        if self._life.__contains__(life) and not self._lifeToRemove.__contains__(life):
+            self._empty_cells_ToAdd.append(num)
             Utils._display.clear_cell(life.col, life.row)
+            self._lifeToRemove.append(life)
+
 
     def add_life(self, life:Life):
+        print('life added')
         num = calc(life.col, life.row)
-        if self._grid[num] == None:
-            if self._newLife.__contains__(life) == False:
-                self._newLife.append(life)
-                
-                Utils._display.set_color(life.col, life.row, life.color)
+        if self.is_empty(num):
+            self._newLife.append(life)
+            Utils._display.set_color(life.col, life.row, life.color)
+            self._empty_cells_ToRemove.append(num)
 
     def update_lists(self):        
         for life in self._newLife:
             num = calc(life.col, life.row)
             if self.is_empty(num):
                 self._life.append(life)
-                self._grid[num] = life
                 if self._empty_cells.__contains__(num):
                     self._empty_cells.remove(num)
 
